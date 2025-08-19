@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html lang="es">
+<!--
+	MODIFIED BY ME FROM ORIGINAL: Dopetrope by HTML5 UP
+	html5up.net | @ajlkn
+-->
+<head>
+	<title>Mentorías - RCR</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="Inscríbete en las mentorías de Ricardo Coronel Ruiz: productor, artista y educador en arte aplicado, IA y producción multimedia." />
+	<meta name="author" content="Ricardo Coronel Ruiz" />
+	
+	<!-- Open Graph (SEO y redes sociales) -->
+	<meta property="og:title" content="Mentorías - Ricardo Coronel Ruiz" />
+	<meta property="og:description" content="Charlas y mentorías sobre producción audiovisual, IA generativa y eventos híbridos." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://tusitio.com/mentorias.html" />
+	<meta property="og:image" content="https://tusitio.com/static/img/og-mentorias.png" />
+	
+	<!-- Favicons -->
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+	<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<link rel="stylesheet" href="static/css/main.css?v=1" />
+</head>
+<body class="homepage is-preload">
+	<div id="page-wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<h1 class="visually-hidden">Ricardo Coronel Ruiz. Artista, productor y mentor. Madrid, España.</h1>
+			<h2 class="logo"><a href="index.html" aria-label="Inicio Ricardo Coronel Ruiz">Ricardo Coronel Ruiz</a></h2>
+
+			<!-- Nav -->
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">Inicio</a></li>
+					<li><a href="portafolio.html">Portafolio</a></li>
+					<li><a href="recursos.html">Recursos</a></li>
+					<li class="current"><a href="mentorias.html">Mentorías</a></li>
+				</ul>
+			</nav>
+
+			<!-- Banner -->
+			<section id="banner4">
+				<header>
+					<h2 id="contenido">Compartamos conocimientos</h2>
+					<p>Selecciona tus charlas y solicita tu inscripción</p>
+				</header>
+			</section>
+		</header>
+
+		<!-- Formulario -->
+		<main class="form-wrapper">
+			<section id="registro-charlas" class="box">
+				<form id="charlasForm" onsubmit="enviarFormulario(event)">
+					
+					<label for="nombre">Nombre completo:</label>
+					<input id="nombre" type="text" name="nombre" required placeholder="Tu nombre">
+
+					<label for="email">Correo electrónico:</label>
+					<input id="email" type="email" name="email" required placeholder="Tu correo">
+
+					<label for="pais">País:</label>
+					<input id="pais" type="text" name="pais" required placeholder="Tu país">
+
+					<fieldset>
+						<legend>Charlas disponibles:</legend>
+						<div class="checkbox-grid">
+							<label><input type="checkbox" name="charlas" value="Producción audiovisual_01"> Producción audiovisual 01</label>
+							<label><input type="checkbox" name="charlas" value="Creando música con IA Generativa_01"> Creando música con IA Generativa 01</label>
+							<label><input type="checkbox" name="charlas" value="Eventos híbridos_04"> Eventos híbridos 04</label>
+							<label><input type="checkbox" name="charlas" value="Eventos híbridos_03"> Eventos híbridos 03</label>
+							<label><input type="checkbox" name="charlas" value="Hablemos de la IA"> Hablemos de la IA</label>
+							<label><input type="checkbox" name="charlas" value="Eventos híbridos_02"> Eventos híbridos 02</label>
+							<label><input type="checkbox" name="charlas" value="Eventos híbridos_01"> Eventos híbridos 01</label>
+						</div>
+					</fieldset>
+
+					<div class="boton-centro">
+						<input type="submit" value="Solicitar Inscripción">
+					</div>
+				</form>
+
+				<p id="mensaje"></p>
+			</section>
+		</main>
+
+        <!-- Copyright 2 -->
+				<div id="copyright2">
+				<ul class="links">
+					<li><i class="fa-solid fa-code"></i> : <a href="index.html">RCR</a>   |   <i class="fa-brands fa-html5"> : </i><a href="http://html5up.net">AJ</a></li><br />
+					&copy; Ricardo Coronel Ruiz. <br>
+					Madrid, 2025.</li>
+				</ul>
+				</div>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="static/js/jquery.min.js"></script>
+	<script src="static/js/jquery.dropotron.min.js"></script>
+	<script src="static/js/browser.min.js"></script>
+	<script src="static/js/breakpoints.min.js"></script>
+	<script src="static/js/util.js"></script>
+	<script src="static/js/main.js"></script>
+	<script src="static/js/mentorias.js"></script>
+</body>
+</html>
