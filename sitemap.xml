@@ -3,9 +3,9 @@
   <!-- Spanish -->
   <url>
     <loc>https://ricardocoronel.com/</loc>
-    <changefreq>monthly</changefreq>
+    <changefreq>monthly</changefreq>  
     <priority>1.0</priority>
-  </url>
+  </url>  
   <url>
     <loc>https://ricardocoronel.com/historia.html</loc>
     <changefreq>monthly</changefreq>
