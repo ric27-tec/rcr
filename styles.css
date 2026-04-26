@@ -1,0 +1,851 @@
+/* ================================
+   GLOBAL VARIABLES
+   ================================ */
+
+:root {
+  --bg: #000000; /* Main background color */
+  --bg-soft: #080808; /* Softer black for subtle sections */
+  --text: #f2efe9; /* Main warm white text color */
+  --muted: #a9a096; /* Secondary text color */
+  --dim: #6f685f; /* Very soft/dim text color */
+  --line: rgba(242, 239, 233, 0.13); /* Thin border color */
+  --glass: rgba(255, 255, 255, 0.045); /* Transparent card background */
+  --max: 1400px; /* Main max content width */
+  --narrow: 680px; /* Narrow reading width */
+}
+
+/* ================================
+   RESET / BASE
+   ================================ */
+
+* {
+  box-sizing: border-box; /* Includes padding and border inside element width */
+}
+
+html {
+  scroll-behavior: smooth; /* Smooth scrolling when clicking anchor links */
+}
+
+body {
+  margin: 0; /* Removes browser default margin */
+  color: var(--text); /* Sets default text color */
+  background: var(--bg); /* Sets page background */
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; /* Main sans-serif font */
+  line-height: 1.6; /* Comfortable default text height */
+}
+
+body::selection {
+  color: #050505; /* Text color when selecting text */
+  background: var(--text); /* Background color when selecting text */
+}
+
+a,
+button {
+  color: inherit; /* Links and buttons inherit text color */
+  font: inherit; /* Links and buttons inherit font settings */
+}
+
+a {
+  text-decoration: none; /* Removes default underline from links */
+}
+
+button {
+  border: 0; /* Removes default button border */
+  cursor: pointer; /* Shows pointer cursor on hover */
+  background: transparent; /* Removes default button background */
+}
+
+/* ================================
+   GLOBAL NOISE TEXTURE
+   ================================ */
+
+.noise {
+  position: fixed; /* Keeps texture fixed over the whole viewport */
+  inset: 0; /* Stretches texture to all screen edges */
+  z-index: 50; /* Places it above most visual layers */
+  pointer-events: none; /* Allows clicks through the texture */
+  opacity: 0.032; /* Strength of the dotted texture */
+  background-image: radial-gradient(circle at 1px 1px, #fff 1px, transparent 0); /* Dot pattern */
+  background-size: 4px 4px; /* Spacing between dots */
+}
+
+.noise.noise-hidden {
+  opacity: 0; /* Hides noise over photo sections via JS */
+}
+
+/* ================================
+   SITE HEADER
+   ================================ */
+
+.site-header {
+  position: fixed; /* Keeps header visible over hero */
+  top: 0; /* Pins header to top */
+  left: 0; /* Pins header to left */
+  right: 0; /* Pins header to right */
+  z-index: 20; /* Keeps header above hero image */
+  display: grid; /* Uses grid for brand / nav / social */
+  grid-template-columns: 1fr auto 1fr; /* Left brand, centered nav, right social */
+  align-items: center; /* Vertically centers header contents */
+  padding: 22px clamp(20px, 4vw, 56px); /* Responsive header padding */
+  color: var(--text); /* Header text color */
+  background: linear-gradient(to bottom, rgb(0, 0, 0), rgba(0, 0, 0, 0)); /* Fade behind header */
+}
+
+.note-page .site-header {
+  position: sticky; /* Keeps note-page header in normal flow but sticky */
+  background: rgba(3, 3, 3, 0.88); /* Solid-ish background on note pages */
+  backdrop-filter: blur(16px); /* Adds glass blur behind header */
+}
+
+.brand {
+  font-size: 0.78rem; /* Small brand text */
+  letter-spacing: 0.11em; /* Wide tracking */
+  text-transform: uppercase; /* Uppercase brand */
+  font-weight: 100; /* Thin brand weight */
+}
+
+.nav {
+  display: flex; /* Horizontal navigation */
+  gap: 26px; /* Space between nav items */
+  font-size: 0.82rem; /* Small nav text */
+  color: var(--muted); /* Muted nav color */
+}
+
+.social-links {
+  justify-self: end; /* Aligns social links to the right grid column */
+  display: flex; /* Horizontal social links */
+  gap: 14px; /* Space between social links */
+  font-size: 0.78rem; /* Small social text */
+  color: var(--muted); /* Muted social color */
+}
+
+.nav a,
+.social-links a,
+.site-footer a,
+.external-line a,
+.inline-link,
+.note-body a {
+  transition: color 180ms ease, opacity 180ms ease; /* Smooth hover transition */
+}
+
+.nav a:hover,
+.social-links a:hover,
+.site-footer a:hover,
+.external-line a:hover,
+.note-body a:hover,
+.inline-link:hover {
+  color: var(--text); /* Brightens links on hover */
+}
+
+/* ================================
+   GLOBAL TYPOGRAPHY
+   ================================ */
+
+h1,
+h2,
+h3 {
+  margin: 0; /* Removes default heading margin */
+  font-family: "Playfair Display", Georgia, serif; /* Editorial serif font */
+  font-weight: 500; /* Medium serif weight */
+  line-height: 1.03; /* Tight heading line-height */
+}
+
+h1 {
+  max-width: 1680px; /* Max title width */
+  margin: 0 40px 0 auto; /* Pushes title to the right and keeps space from right edge */
+  letter-spacing: -0.065em; /* Tight serif title tracking */
+}
+
+h1 span,
+h1 small {
+  display: block; /* Keeps hero title and small line stacked */
+}
+
+h1 span {
+  font-size: clamp(2rem, 5vw, 7.8rem); /* Main hero title size */
+  font-weight: 700; /* Bold title */
+}
+
+h1 small {
+  margin-top: 20px; /* Space under main title */
+  color: var(--muted); /* Smaller line color */
+  font-family: Inter, system-ui, sans-serif; /* Sans font for small line */
+  font-size: clamp(0.7rem, 1vw, 1.35rem); /* Responsive small line size */
+  font-weight: 100; /* Thin small line weight */
+  letter-spacing: -0.025em; /* Slightly tight small line tracking */
+  line-height: 1.25; /* Readable small line height */
+}
+
+h2 {
+  letter-spacing: -0.05em; /* Tight h2 tracking */
+}
+
+h3 {
+  letter-spacing: -0.04em; /* Tight h3 tracking */
+}
+
+/* ================================
+   HERO SECTION
+   ================================ */
+
+.hero {
+  position: relative; /* Allows absolute children inside */
+  min-height: 82vh; /* Hero takes 82% of viewport height */
+  max-height: 760px; /* Prevents hero from becoming too tall */
+  display: flex; /* Enables alignment if needed */
+  align-items: flex-end; /* Keeps contents toward bottom */
+  overflow: hidden; /* Crops image overflow */
+  isolation: isolate; /* Keeps z-index layers contained */
+}
+
+.hero-photo {
+  position: absolute; /* Places image behind content */
+  inset: 0; /* Stretches image to cover hero */
+  z-index: -3; /* Sends image behind overlay and text */
+  width: 100%; /* Full hero width */
+  height: 100%; /* Full hero height */
+  object-fit: cover; /* Crops image to fill hero */
+  object-position: center center; /* Keeps photo centered */
+  transform: scale(1.02); /* Slight zoom to avoid edge gaps */
+}
+
+.hero-overlay {
+  position: absolute; /* Places overlay over photo */
+  inset: 0; /* Covers entire hero */
+  z-index: -2; /* Between photo and text */
+  background: linear-gradient(
+    to bottom,
+    rgba(3, 3, 3, 0.02) 0%,
+    rgba(3, 3, 3, 0.1) 45%,
+    rgba(3, 3, 3, 0.78) 100%
+  ); /* Darkens lower hero for text readability */
+}
+
+.hero-content {
+  position: absolute; /* Fixes text relative to hero */
+  right: clamp(27px, 5vw, 72px); /* Distance from right edge */
+  bottom: clamp(54px, 8vh, 92px); /* Distance from bottom edge */
+  width: min(980px, calc(100% - 48px)); /* Prevents text block from overflowing */
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes padding */
+  text-align: right; /* Aligns text to the right */
+}
+
+.eyebrow {
+  margin: 0 0 14px; /* Space below eyebrow */
+  color: var(--muted); /* Muted eyebrow color */
+  font-size: 0.75rem; /* Small uppercase label */
+  letter-spacing: 0.18em; /* Wide letter spacing */
+  text-transform: uppercase; /* Uppercase label */
+}
+
+.hero-subtitle {
+  max-width: 520px; /* Limits subtitle width */
+  margin: 18px 0 0 auto; /* Places subtitle under title aligned right */
+  color: var(--muted); /* Muted subtitle */
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem); /* Responsive subtitle size */
+}
+
+/* ================================
+   GENERAL SECTIONS
+   ================================ */
+
+.section-wide,
+.section-narrow {
+  position: relative; /* Allows layering above background */
+  z-index: 2; /* Keeps sections above background effects */
+  margin: 0 auto; /* Centers sections */
+  padding: 55px 20px; /* Vertical and side section spacing */
+}
+
+.section-wide {
+  width: min(var(--max), 100%); /* Wide section max width */
+}
+
+.section-narrow {
+  width: min(var(--narrow), 100%); /* Narrow section max width */
+}
+
+.content-section {
+  border-top: 1px solid var(--line); /* Separator line above content sections */
+}
+
+.section-heading {
+  display: flex; /* Places eyebrow and heading side by side */
+  justify-content: space-between; /* Sends heading to opposite side */
+  gap: 40px; /* Space between heading pieces */
+  align-items: end; /* Aligns items to bottom */
+  margin-bottom: 36px; /* Space below section heading */
+}
+
+.section-heading h2,
+.gateway-card h2,
+.about h2 {
+  font-size: clamp(1.2rem, 4vw, 5rem); /* Large section/card headings */
+}
+
+/* ================================
+   INTRO PARAGRAPH
+   ================================ */
+
+.intro p {
+  margin: 0; /* Removes paragraph margin */
+  color: var(--text); /* Bright intro text */
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; /* Sans font for intro */
+  font-size: clamp(1.25rem, 1.7vw, 1.5rem); /* Responsive intro size */
+  text-align: left; /* Aligns intro text */
+  line-height: 1.55; /* Comfortable intro line height */
+  font-weight: 300; /* Light intro text */
+  letter-spacing: -0.01em; /* Slightly tight intro tracking */
+}
+
+.fade-scroll {
+  opacity: 0; /* Hidden by default for JS effect */
+  transform: translateY(40px); /* Starts slightly lower */
+  transition: opacity 220ms linear, transform 220ms linear; /* Smooth JS-driven fade */
+}
+
+/* ================================
+   GATEWAY CARDS
+   ================================ */
+
+.gateways {
+  display: grid; /* Grid layout for three cards */
+  grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+  gap: 16px; /* Space between gateway cards */
+  padding-top: 40px; /* Extra space above cards */
+  padding-bottom: 70px; /* Extra space below cards */
+}
+
+.gateway-card,
+.post-card,
+.feature-card,
+.visual-card {
+  border: 1px solid var(--line); /* Subtle card border */
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.015)); /* Glassy dark background */
+  backdrop-filter: blur(12px); /* Glass blur */
+}
+
+.gateway-card {
+  min-height: 320px; /* Card height */
+  display: flex; /* Allows vertical layout */
+  flex-direction: column; /* Stacks card content vertically */
+  padding: 28px; /* Inner card padding */
+  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease; /* Smooth hover */
+}
+
+.gateway-card:hover,
+.post-card:hover,
+.feature-link:hover,
+.visual-card:hover {
+  transform: translateY(-4px); /* Slight lift on hover */
+  border-color: rgba(242, 239, 233, 0.34); /* Brighter border on hover */
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.02)); /* Slightly brighter card */
+}
+
+.gateway-card span,
+.date {
+  color: var(--dim); /* Dim metadata color */
+  font-size: 0.75rem; /* Small metadata text */
+  letter-spacing: 0.12em; /* Wide metadata tracking */
+  text-transform: uppercase; /* Uppercase metadata */
+}
+
+.gateway-card h2 {
+  align-self: start; /* Aligns title to the top of the card content flow */
+  margin-top: 52px; /* Space above title */
+}
+
+.gateway-card p {
+  align-self: end; /* Keeps gateway description near the lower part of the card */
+  margin: auto 0 10px; /* Pushes description down without affecting other paragraph types */
+  color: var(--muted); /* Muted gateway description color */
+}
+
+.post-card p,
+.feature-card p,
+.visual-card p,
+.about p,
+.visual-intro,
+.external-line,
+.note-body p,
+.note-body li {
+  color: var(--muted); /* Shared muted text color without layout side effects */
+}
+
+/* ================================
+   FULL-WIDTH IMAGE BREAK
+   ================================ */
+
+.image-break {
+  position: relative; /* Allows overlay and text positioning */
+  z-index: 2; /* Keeps section above background */
+  width: 100%; /* Full browser width */
+  min-height: min(72vh, 760px); /* Banner height */
+  margin: 0; /* No outside margin */
+  padding: 0; /* No inner padding */
+  overflow: hidden; /* Crops image */
+}
+
+.image-break img {
+  display: block; /* Removes inline image spacing */
+  width: 100%; /* Full banner width */
+  min-height: min(72vh, 760px); /* Same height as parent */
+  object-fit: cover; /* Crops image to fill */
+  border: 0; /* Removes border */
+}
+
+.image-break::after {
+  content: ""; /* Creates overlay layer */
+  position: absolute; /* Places overlay over image */
+  inset: 0; /* Covers full banner */
+  background: linear-gradient(
+    to right,
+    rgba(3, 3, 3, 0.78),
+    rgba(3, 3, 3, 0.18) 52%,
+    rgba(3, 3, 3, 0.72)
+  ); /* Side darkening for text */
+}
+
+.image-break-copy {
+  position: absolute; /* Positions banner text over image */
+  z-index: 2; /* Above overlay */
+  right: clamp(20px, 6vw, 90px); /* Distance from right */
+  bottom: clamp(40px, 9vw, 110px); /* Distance from bottom */
+  width: min(680px, calc(100% - 40px)); /* Limits text width */
+  text-align: right; /* Right-align banner text */
+}
+
+.image-break-copy h2 {
+  font-size: clamp(1.8rem, 3vw, 2.8rem); /* Large banner heading */
+  letter-spacing: -0.06em; /* Tight heading tracking */
+}
+
+/* ================================
+   HOMEPAGE NOTES CARDS
+   ================================ */
+
+.post-grid,
+.visual-grid {
+  display: grid; /* Grid for cards */
+  grid-template-columns: repeat(3, 1fr); /* Three columns on desktop */
+  gap: 16px; /* Space between cards */
+}
+
+.post-card {
+  display: block; /* Makes full card clickable */
+  min-height: 250px; /* Card height */
+  padding: 26px; /* Inner spacing */
+  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease; /* Hover transition */
+}
+
+.post-card h3,
+.feature-card h3 {
+  margin: 12px 0 18px; /* Heading spacing inside cards */
+  font-size: clamp(1.6rem, 2.4vw, 2.3rem); /* Card title size */
+}
+
+/* ================================
+   NOTE PAGES
+   ================================ */
+
+.note-hero {
+  position: relative; /* Allows absolute image and overlay */
+  min-height: 58vh; /* Height of note hero */
+  display: flex; /* Allows bottom alignment */
+  align-items: flex-end; /* Places content at bottom */
+  overflow: hidden; /* Crops note hero image */
+  border-bottom: 1px solid var(--line); /* Separator line */
+}
+
+.note-hero img {
+  position: absolute; /* Places note hero image behind text */
+  inset: 0; /* Covers hero area */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  object-fit: cover; /* Crops image */
+  z-index: -2; /* Behind overlay/text */
+  filter: saturate(0.7) brightness(0.6); /* Darkens note hero */
+}
+
+.note-hero::after {
+  content: ""; /* Creates overlay */
+  position: absolute; /* Positions overlay */
+  inset: 0; /* Covers entire note hero */
+  z-index: -1; /* Above image, below text */
+  background: linear-gradient(to bottom, rgba(3, 3, 3, 0.16), #030303 98%); /* Fades image into page background */
+}
+
+.note-hero-content {
+  width: min(var(--max), calc(100% - 40px)); /* Keeps content aligned to main width */
+  margin: 0 auto; /* Centers content block */
+  padding: 120px 0 70px; /* Space around note hero text */
+}
+
+.note-hero h1 {
+  max-width: 900px; /* Note title width */
+  margin: 0; /* Removes global h1 right alignment */
+  font-size: clamp(3rem, 7vw, 8rem); /* Note title size */
+}
+
+.note-hero .hero-subtitle {
+  margin-left: 0; /* Aligns subtitle left on note pages */
+}
+
+.note-layout {
+  width: min(var(--max), calc(100% - 40px)); /* Main note layout width */
+  margin: 0 auto; /* Centers note layout */
+  display: grid; /* Creates sidebar + article columns */
+  grid-template-columns: 260px minmax(0, 760px); /* Sidebar width + article width */
+  gap: 72px; /* Space between sidebar and article */
+  align-items: start; /* Aligns sidebar and article at top */
+  padding: 80px 0 120px; /* Top/bottom spacing for note content */
+}
+
+.notes-nav {
+  position: sticky; /* Keeps archive visible while scrolling on desktop */
+  top: 94px; /* Distance from top when sticky */
+  padding: 18px 0 18px 18px; /* Sidebar inner spacing */
+  border-left: 1px solid var(--line); /* Vertical archive line */
+}
+
+.notes-nav-heading {
+  margin: 0 0 16px; /* Space below archive heading */
+  color: var(--dim); /* Dim archive heading */
+  font-size: 0.72rem; /* Small archive heading */
+  letter-spacing: 0.16em; /* Wide archive tracking */
+  text-transform: uppercase; /* Uppercase archive heading */
+}
+
+.notes-nav a {
+  display: block; /* Each archive item takes full line */
+  padding: 14px 0; /* Archive item spacing */
+  border-bottom: 1px solid rgba(242, 239, 233, 0.08); /* Separator between archive links */
+}
+
+.notes-nav-date {
+  display: block; /* Date appears above title */
+  color: var(--dim); /* Dim date color */
+  font-size: 0.72rem; /* Small date */
+  letter-spacing: 0.1em; /* Wide date tracking */
+  text-transform: uppercase; /* Uppercase date */
+}
+
+.notes-nav-title-link {
+  display: block; /* Title appears below date */
+  margin-top: 4px; /* Space between date and title */
+  color: var(--muted); /* Muted archive title */
+  font-size: 0.92rem; /* Archive title size */
+  line-height: 1.3; /* Archive title line-height */
+}
+
+.notes-nav a:hover .notes-nav-title-link {
+  color: var(--text); /* Brightens archive title on hover */
+}
+
+.note-body {
+  width: auto; /* Lets grid column control width */
+  margin: 0; /* Removes auto-centering */
+  padding: 0; /* Removes old padding */
+}
+
+.note-body p,
+.note-body li {
+  font-size: 1.08rem; /* Reading text size */
+}
+
+.note-body h2 {
+  margin-top: 56px; /* Space above note subheadings */
+  font-size: clamp(2rem, 4vw, 3.2rem); /* Note subheading size */
+}
+
+/* ================================
+   CONVERSATIONS
+   ================================ */
+
+.split-section .feature-card {
+  display: grid; /* Creates video + text columns */
+  grid-template-columns: 1.15fr 0.85fr; /* Larger video column, smaller text column */
+  gap: 28px; /* Space between video and text */
+  align-items: center; /* Vertically aligns video/text */
+  padding: 18px; /* Inner card padding */
+  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease; /* Hover transition */
+}
+
+.video-embed-wrap {
+  position: relative; /* Allows iframe absolute positioning */
+  overflow: hidden; /* Clips iframe */
+  width: 100%; /* Full card width */
+  aspect-ratio: 16 / 9; /* Keeps video widescreen */
+  background: #111; /* Dark placeholder */
+}
+
+.video-embed-wrap iframe {
+  position: absolute; /* Fills video wrapper */
+  inset: 0; /* Covers wrapper */
+  width: 100%; /* Full iframe width */
+  height: 100%; /* Full iframe height */
+  border: 0; /* Removes iframe border */
+}
+
+/* ================================
+   EXPRESSIONS
+   ================================ */
+
+.visual-intro {
+  max-width: 760px; /* Limits intro width */
+  margin: -14px 0 56px; /* Adds stronger space below intro before subsections */
+  font-family: "Playfair Display", Georgia, serif; /* Serif intro */
+  font-size: clamp(1.4rem, 2.6vw, 2.4rem); /* Visual intro size */
+  line-height: 1.24; /* Serif intro line-height */
+  letter-spacing: -0.03em; /* Tight visual intro tracking */
+}
+
+.expression-block {
+  padding-top: 80px; /* Adds space above each expression subsection */
+}
+
+.expression-block + .expression-block {
+  margin-top: 80px; /* Adds space before every expression subsection after the first */
+  padding-top: 80px; /* Adds breathing room after the separator line */
+  border-top: 1px solid var(--line); /* Separates Photography, Video, and Music */
+}
+
+.expression-heading {
+  max-width: 760px; /* Keeps subsection text aligned with intro width */
+  margin-bottom: 32px; /* Space between subsection heading and card grid */
+}
+
+.expression-heading .eyebrow {
+  margin-bottom: 14px; /* Space between subsection label and description */
+}
+
+.expression-heading p:last-child {
+  margin: 0; /* Removes default paragraph spacing */
+  color: var(--muted); /* Muted subsection description */
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem); /* Subsection description size */
+  line-height: 1.45; /* Comfortable description line height */
+  font-weight: 300; /* Light subsection description */
+}
+
+.visual-grid {
+  margin-bottom: 24px; /* Space between expression cards and external link */
+}
+
+.visual-card {
+  display: flex; /* Allows image and caption to stack consistently */
+  flex-direction: column; /* Stacks image above caption */
+  justify-content: space-between; /* Keeps caption anchored cleanly */
+  width: 100%; /* Full grid cell width */
+  padding: 0; /* Removes inner spacing */
+  overflow: hidden; /* Crops image edges */
+  text-align: left; /* Text left aligned */
+  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease; /* Hover transition */
+}
+
+.visual-card img {
+  display: block; /* Removes inline image spacing */
+  width: 100%; /* Full card width */
+  aspect-ratio: 4 / 5; /* Portrait crop */
+  object-fit: cover; /* Crops image */
+  filter: saturate(0.75) contrast(1.08); /* Dark editorial image treatment */
+}
+
+.visual-card p {
+  margin: 0; /* Removes default paragraph margin */
+  padding: 18px; /* Caption padding */
+  font-size: 0.95rem; /* Caption size */
+}
+
+/* ================================
+   LINKS AND ABOUT
+   ================================ */
+
+.inline-link,
+.external-line a,
+.note-body a {
+  color: var(--text); /* Bright links */
+  text-decoration: underline; /* Underline links */
+  text-underline-offset: 4px; /* Moves underline away from text */
+}
+
+.external-line {
+  margin: 28px 0 0; /* Space above external line */
+  font-size: 0.95rem; /* External line size */
+}
+
+.about p {
+  font-size: 1.12rem; /* About paragraph size */
+}
+
+.closing-line {
+  margin-top: 36px; /* Space above closing line */
+  color: var(--text) !important; /* Forces bright closing line */
+  font-family: "Playfair Display", Georgia, serif; /* Serif closing line */
+  font-size: clamp(1.8rem, 3vw, 3rem) !important; /* Large closing line */
+  letter-spacing: -0.04em; /* Tight closing line tracking */
+}
+
+/* ================================
+   FOOTER
+   ================================ */
+
+.site-footer {
+  position: relative; /* Allows layering */
+  z-index: 2; /* Above background */
+  display: flex; /* Horizontal footer layout */
+  justify-content: space-between; /* Separates copyright and link */
+  gap: 20px; /* Space between footer items */
+  padding: 40px clamp(20px, 4vw, 56px); /* Footer spacing */
+  border-top: 1px solid var(--line); /* Footer top border */
+  color: var(--dim); /* Dim footer text */
+  font-size: 0.85rem; /* Small footer text */
+}
+
+/* ================================
+   LIGHTBOX
+   ================================ */
+
+.lightbox {
+  position: fixed; /* Full-screen modal */
+  inset: 0; /* Covers whole viewport */
+  z-index: 80; /* Above everything else */
+  display: grid; /* Centers image */
+  place-items: center; /* Centers image horizontally and vertically */
+  padding: 36px; /* Space around image */
+  background: rgba(0, 0, 0, 0.94); /* Dark modal background */
+  opacity: 0; /* Hidden by default */
+  pointer-events: none; /* Not clickable when hidden */
+  transition: opacity 180ms ease; /* Fade in/out */
+}
+
+.lightbox.open {
+  opacity: 1; /* Shows modal */
+  pointer-events: auto; /* Allows clicking close */
+}
+
+.lightbox img {
+  max-width: min(100%, 1200px); /* Max image width */
+  max-height: 86vh; /* Max image height */
+  object-fit: contain; /* Shows whole image */
+}
+
+.lightbox-close {
+  position: absolute; /* Places close button */
+  top: 24px; /* Close button top spacing */
+  right: 24px; /* Close button right spacing */
+  color: var(--muted); /* Muted close text */
+  background: transparent; /* No button background */
+  text-transform: uppercase; /* Uppercase close */
+  letter-spacing: 0.16em; /* Wide close tracking */
+  font-size: 0.72rem; /* Small close text */
+}
+
+/* ================================
+   REVEAL ANIMATION
+   ================================ */
+
+.reveal {
+  opacity: 0; /* Hidden before JS marks visible */
+  transform: translateY(24px); /* Starts slightly lower */
+  transition: opacity 700ms ease, transform 700ms ease; /* Smooth reveal */
+}
+
+.reveal.visible {
+  opacity: 1; /* Shows element */
+  transform: translateY(0); /* Moves element into place */
+}
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+
+@media (max-width: 860px) {
+  .site-header {
+    grid-template-columns: 1fr auto; /* Brand left, social right */
+  }
+
+  .nav {
+    display: none; /* Hides main nav on smaller screens */
+  }
+
+  .hero {
+    min-height: 75vh; /* Taller hero on mobile */
+  }
+
+  .hero-photo {
+    object-position: center center; /* Keeps photo centered on mobile */
+  }
+
+  .hero-content {
+    right: 22px; /* Mobile right edge */
+    left: 22px; /* Mobile left edge */
+    bottom: 50px; /* Mobile bottom position */
+    width: auto; /* Uses available mobile width */
+    text-align: right; /* Keeps hero text right aligned */
+  }
+
+  h1 {
+    max-width: 100%; /* Allows title to use mobile width */
+    margin-left: auto; /* Keeps right alignment behavior */
+  }
+
+  h1 span {
+    font-size: clamp(2rem, 7vw, 5.2rem); /* Mobile title size */
+  }
+
+  h1 small {
+    font-size: 0.7rem; /* Mobile small line size */
+    margin-top: 0; /* Removes space above small line on mobile */
+  }
+
+  .hero-subtitle {
+    margin-left: auto; /* Keeps subtitle aligned right */
+  }
+
+  .section-wide,
+  .section-narrow {
+    padding: 40px 50px; /* Mobile section padding */
+  }
+
+  .gateways,
+  .post-grid,
+  .visual-grid,
+  .split-section .feature-card {
+    grid-template-columns: 1fr; /* Stacks grid cards on mobile */
+  }
+
+  .image-break {
+    min-height: 50vh; /* Shorter image banner on mobile */
+  }
+
+  .image-break img {
+    min-height: 1vh; /* Matches mobile banner height */
+  }
+
+  .image-break-copy {
+    text-align: right; /* Keeps banner text right-aligned on mobile */
+    right: 20px; /* Mobile right edge for banner text */
+    left: 120px; /* Positions banner text from left */
+    width: auto; /* Allows banner text to use available width */
+  }
+
+  .expression-block {
+    padding-top: 64px; /* Slightly smaller expression spacing on mobile */
+  }
+
+  .expression-block + .expression-block {
+    margin-top: 64px; /* Smaller separation between expression sections on mobile */
+    padding-top: 64px; /* Smaller breathing room after separator on mobile */
+  }
+
+  .note-layout {
+    grid-template-columns: 1fr; /* Stacks archive and article on mobile */
+    gap: 40px; /* Smaller gap */
+    padding: 64px 0 96px; /* Mobile note spacing */
+  }
+
+  .notes-nav {
+    position: static; /* Removes sticky archive on mobile */
+  }
+}
